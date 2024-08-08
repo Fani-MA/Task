@@ -15,8 +15,6 @@ services:
         condition: service_healthy
 
 
-
-
   task_db:
     image: postgres:16.3
     container_name: task_db
