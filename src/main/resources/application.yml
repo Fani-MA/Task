@@ -1,0 +1,12 @@
+server:
+  port: 8090
+
+
+spring:
+  application:
+    name: Task
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5454/task
+    driver-class-name: org.postgresql.Driver
