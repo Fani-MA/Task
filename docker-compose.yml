@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  task_app:
+    image: task_app
+    container_name: task
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      target: .
+    ports:
+      - "8090:8090"
+    depends_on:
+      task_db:
+        condition: service_healthy
+    links:
+      - task_db
+
+
+
+  task_db:
+    image: postgres:16.3
+    container_name: task_db
+    restart: always
+    ports:
+      - "5454:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: task
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres task"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  db-data:
