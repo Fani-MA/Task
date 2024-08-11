@@ -3,9 +3,13 @@ package org.example.task.domain.project;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.example.task.domain.task.Task;
+import org.example.task.domain.task.TaskStatus;
 import org.example.task.domain.user.User;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -39,5 +43,16 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "author_id")
     User projectAuthor;
+
+    @ToString.Exclude
+    @Builder.Default
+    @ManyToMany(mappedBy = "projects")
+    List<TaskStatus> projectTaskTypes = new ArrayList<>();
+
+    @ToString.Exclude
+    @Builder.Default
+    @OneToMany(mappedBy = "project")
+    List<Task> projectTasks = new ArrayList<>();
+
 
 }

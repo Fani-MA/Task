@@ -2,10 +2,13 @@ package org.example.task.domain.task;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.task.domain.Comment;
 import org.example.task.domain.project.Project;
 import org.example.task.domain.user.User;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -15,6 +18,7 @@ import java.time.OffsetDateTime;
 @Entity
 @Table(name = "tasks")
 public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -31,8 +35,9 @@ public class Task {
     @JoinColumn(name = "project_id")
     Project project;
 
-    @Column(name = "priority")
-    TaskPriority priority;
+    @ManyToOne
+    @JoinColumn(name = "priority_id")
+    Priority priority;
 
     @Column(name = "created_at")
     @Builder.Default
@@ -47,6 +52,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "status_id")
     TaskStatus status;
+
+    @OneToMany(mappedBy = "task")
+    List<Comment> comments = new ArrayList<>();
 
 
 }
