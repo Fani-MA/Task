@@ -24,6 +24,7 @@ public class User {
     @Column(name = "user_name")
     String username;
 
+    @ToString.Exclude
     @Column(name = "password")
     String password;
 
@@ -33,8 +34,9 @@ public class User {
     @Column(name = "phone_number")
     String phoneNumber;
 
-    @OneToMany(mappedBy = "orginizer")
-    List<Project> projects;
+    @Builder.Default
+    @OneToMany(mappedBy = "projectAuthor")
+    List<Project> projects = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "author")
