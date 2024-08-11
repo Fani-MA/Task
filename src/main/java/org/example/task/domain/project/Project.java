@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.example.task.domain.task.Task;
-import org.example.task.domain.task.TaskStatus;
+import org.example.task.domain.task.TaskStage;
 import org.example.task.domain.user.User;
 
 import java.time.OffsetDateTime;
@@ -47,7 +47,7 @@ public class Project {
     @ToString.Exclude
     @Builder.Default
     @ManyToMany(mappedBy = "projects")
-    List<TaskStatus> projectTaskTypes = new ArrayList<>();
+    List<TaskStage> projectTaskStages = new ArrayList<>();
 
     @ToString.Exclude
     @Builder.Default

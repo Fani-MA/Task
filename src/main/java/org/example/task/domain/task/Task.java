@@ -51,7 +51,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    TaskStatus status;
+    TaskStage stage;
 
     @OneToMany(mappedBy = "task")
     List<Comment> comments = new ArrayList<>();

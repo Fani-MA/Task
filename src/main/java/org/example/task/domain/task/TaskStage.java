@@ -16,7 +16,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "task_status")
-public class TaskStatus {
+public class TaskStage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

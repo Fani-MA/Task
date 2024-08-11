@@ -18,17 +18,17 @@ CREATE TABLE IF NOT EXISTS projects
     author_id   BIGINT REFERENCES users(id)     NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS task_status
+CREATE TABLE IF NOT EXISTS task_stage
 (
     id BIGSERIAL PRIMARY KEY ,
-    status VARCHAR(20)
+    stage VARCHAR(20)
 );
 
 
-CREATE TABLE IF NOT EXISTS project_task_states
+CREATE TABLE IF NOT EXISTS project_task_stage
 (
     project_id  BIGINT REFERENCES projects(id) ,
-    task_status BIGINT REFERENCES task_status(id),
+    task_status BIGINT REFERENCES task_stage(id),
     PRIMARY KEY (project_id, task_status)
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     start_time    TIMESTAMP WITH TIME ZONE,
     end_time      TIMESTAMP WITH TIME ZONE,
     priority_id   BIGINT REFERENCES priority(id)    NOT NULL ,
-    status_id     BIGINT REFERENCES task_status(id) NOT NULL ,
+    status_id     BIGINT REFERENCES task_stage(id) NOT NULL ,
     author_id     BIGINT REFERENCES users(id)       NOT NULL ,
     executor_id   BIGINT REFERENCES users(id),
     project_id    BIGINT REFERENCES projects(id)    NOT NULL

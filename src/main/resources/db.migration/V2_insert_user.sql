@@ -8,7 +8,7 @@ VALUES  ('Low'),
         ('Highest');
 
 
-INSERT INTO task_status (status)
+INSERT INTO task_stage (stage)
 VALUES ('Created'),
        ('In work'),
        ('On review'),
