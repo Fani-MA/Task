@@ -1,12 +1,17 @@
 package org.example.task.domain.task;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.example.task.domain.project.Project;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -26,16 +31,14 @@ public class TaskStage {
     String status;
 
     @ToString.Exclude
+    @JsonBackReference
     @Builder.Default
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "project_task_stage",
-            joinColumns = @JoinColumn(name = "task_stage"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
-    List<Project> projects = new ArrayList<>();
+    @ManyToMany(mappedBy = "projectTaskStages", fetch = FetchType.LAZY)
+    Set<Project> projects = new HashSet<>();
 
 
     @Builder.Default
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "stage",fetch = FetchType.LAZY)
     List<Task> tasks = new ArrayList<>();
 }
 

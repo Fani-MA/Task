@@ -1,5 +1,6 @@
 package org.example.task.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.task.domain.project.Project;
@@ -25,6 +26,7 @@ public class User {
     String username;
 
     @ToString.Exclude
+    @JsonIgnore
     @Column(name = "password")
     String password;
 
@@ -34,16 +36,19 @@ public class User {
     @Column(name = "phone_number")
     String phoneNumber;
 
+    @ToString.Exclude
     @Builder.Default
-    @OneToMany(mappedBy = "projectAuthor")
+    @OneToMany(mappedBy = "projectAuthor", fetch = FetchType.LAZY)
     List<Project> projects = new ArrayList<>();
 
+    @ToString.Exclude
     @Builder.Default
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     List<Task> organizeTasks = new ArrayList<>();
 
+    @ToString.Exclude
     @Builder.Default
-    @OneToMany(mappedBy = "executor")
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
     List<Task> executorTasks = new ArrayList<>();
 
 }

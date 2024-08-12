@@ -1,5 +1,6 @@
 package org.example.task.domain.task;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.task.domain.Comment;
@@ -33,11 +34,12 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     Project project;
 
     @ManyToOne
     @JoinColumn(name = "priority_id")
-    Priority priority;
+    Priority taskPriority;
 
     @Column(name = "created_at")
     @Builder.Default
@@ -51,6 +53,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
+    @JsonBackReference
     TaskStage stage;
 
     @OneToMany(mappedBy = "task")

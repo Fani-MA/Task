@@ -1,5 +1,6 @@
 package org.example.task.domain.task;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,11 +19,11 @@ public class Priority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column
-    String priority;
+    @Column(name = "level")
+    String pri;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "priority")
+    @OneToMany(mappedBy = "taskPriority")
     List<Task> priorityTasks;
 
 }
