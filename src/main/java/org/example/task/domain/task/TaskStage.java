@@ -15,21 +15,21 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "task_status")
+@Table(name = "task_stage")
 public class TaskStage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "status", length = 20)
+    @Column(name = "stage", length = 20)
     String status;
 
     @ToString.Exclude
     @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "project_task_states",
-            joinColumns = @JoinColumn(name = "task_status"),
+    @JoinTable(name = "project_task_stage",
+            joinColumns = @JoinColumn(name = "task_stage"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
     List<Project> projects = new ArrayList<>();
 

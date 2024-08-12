@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS task_stage
 CREATE TABLE IF NOT EXISTS project_task_stage
 (
     project_id  BIGINT REFERENCES projects(id) ,
-    task_status BIGINT REFERENCES task_stage(id),
-    PRIMARY KEY (project_id, task_status)
+    task_stage BIGINT REFERENCES task_stage(id),
+    PRIMARY KEY (project_id, task_stage)
 );
 
 CREATE TABLE IF NOT EXISTS priority
