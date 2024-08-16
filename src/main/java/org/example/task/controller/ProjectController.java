@@ -39,4 +39,10 @@ public class ProjectController {
 
         return ResponseEntity.ok(projectService.findMyProjects(id));
     }
+
+    @PostMapping("/{project_id}/stages")
+    public ResponseEntity<?> addTaskStageInProject(@PathVariable("project_id") Long projectId, @RequestBody String stage){
+
+        return ResponseEntity.ok(projectService.addNewStageToProject(projectId, stage));
+    }
 }

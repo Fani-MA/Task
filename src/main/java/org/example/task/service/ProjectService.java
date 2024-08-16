@@ -14,4 +14,6 @@ public interface ProjectService {
     String closeProject(Long projectId, Long userId);
 
     List<ProjectDto> findMyProjects(Long id);
+
+    String addNewStageToProject(Long projectId, String stage);
 }

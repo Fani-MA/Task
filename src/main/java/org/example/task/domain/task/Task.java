@@ -3,6 +3,7 @@ package org.example.task.domain.task;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.example.task.domain.Comment;
 import org.example.task.domain.project.Project;
 import org.example.task.domain.user.User;
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "tasks")
 public class Task {

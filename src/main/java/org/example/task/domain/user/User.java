@@ -7,6 +7,7 @@ import org.example.task.domain.project.Project;
 import org.example.task.domain.task.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Builder
@@ -35,6 +36,12 @@ public class User {
 
     @Column(name = "phone_number")
     String phoneNumber;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Collection<Role> roles;
 
     @ToString.Exclude
     @Builder.Default

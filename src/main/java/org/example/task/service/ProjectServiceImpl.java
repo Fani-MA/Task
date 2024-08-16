@@ -5,12 +5,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.example.task.domain.project.*;
+import org.example.task.domain.task.TaskStage;
+import org.example.task.domain.task.TaskStageDto;
+import org.example.task.domain.task.TaskStageDtoFactory;
 import org.example.task.exeption.ProjectNotFoundException;
 import org.example.task.repository.ProjectRepository;
+import org.example.task.repository.TaskStageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -21,6 +26,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     ProjectRepository projectRepository;
     ProjectDtoFactory projectDtoFactory;
+    TaskStageDtoFactory taskStageDtoFactory;
+    TaskStageRepository taskStageRepository;
 
     @Transactional(readOnly = true)
     public List<ProjectDto> findAllProjects(){
@@ -43,9 +50,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .title(project.getTitle())
                 .description(project.getDescription())
                 .projectAuthor(project.getProjectAuthor().getUsername())
-                .projectTaskStages(project.getProjectTaskStages())
-                .projectTasks(project.getProjectTasks())
+                .projectTaskStages(project.getProjectTaskStages().stream()
+                        .map(taskStageDtoFactory::makeTaskStageDto).toList())
                 .build();
+
         return response;
     }
 
@@ -73,5 +81,25 @@ public class ProjectServiceImpl implements ProjectService {
 
         return myProjects;
     }
+
+    @Transactional
+    public String addNewStageToProject(Long projectId, String stage){
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(
+                        () -> new ProjectNotFoundException("Not project for add new stage"));
+        if(!taskStageRepository.existsTaskStageByStatus(stage)){
+            taskStageRepository.save(TaskStage.builder()
+                    .status(stage)
+                    .projects(Set.of(project))
+                    .build());
+        } else {
+            project.getProjectTaskStages().add(taskStageRepository.findByStatus(stage));
+        }
+
+
+        return String.format("Created new column: %s", stage);
+    }
+
 
 }

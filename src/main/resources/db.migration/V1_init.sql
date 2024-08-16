@@ -2,11 +2,24 @@ CREATE TABLE IF NOT EXISTS users
 (
     id            BIGSERIAL PRIMARY KEY,
     user_name     VARCHAR(30) UNIQUE    NOT NULL ,
-    password      VARCHAR(50)           NOT NULL ,
+    password      VARCHAR(65)           NOT NULL ,
     email         VARCHAR(50) UNIQUE    NOT NULL ,
     phone_number  VARCHAR(20)
 );
 
+CREATE TABLE IF NOT EXISTS roles
+(
+    id BIGSERIAL PRIMARY KEY ,
+    role VARCHAR(20) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS user_roles
+(
+    user_id BIGINT REFERENCES users(id),
+    role_id BIGINT REFERENCES roles(id),
+    PRIMARY KEY (user_id, role_id)
+);
 
 CREATE TABLE IF NOT EXISTS projects
 (

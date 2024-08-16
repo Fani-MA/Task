@@ -1,6 +1,9 @@
 server:
   port: 8090
 
+jwt:
+  secret: f3f42ea9-3104-4d13-84c0-7bcb68202f16
+  lifetime: 30m
 
 spring:
   application:

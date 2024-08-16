@@ -3,7 +3,8 @@ package org.example.task.domain.project;
 import lombok.Builder;
 import lombok.Data;
 import org.example.task.domain.task.Task;
-import org.example.task.domain.task.TaskStage;
+import org.example.task.domain.task.TaskDto;
+import org.example.task.domain.task.TaskStageDto;
 
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,6 @@ public class ProjectResponse {
     String title;
     String description;
     String projectAuthor;
-    Set<TaskStage> projectTaskStages;
-    List<Task> projectTasks;
+    List<TaskStageDto> projectTaskStages;
+//    List<TaskDto> projectTasks;
 }
