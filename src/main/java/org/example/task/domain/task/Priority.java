@@ -1,8 +1,8 @@
 package org.example.task.domain.task;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "priority")
 public class Priority {
@@ -20,7 +21,7 @@ public class Priority {
     Long id;
 
     @Column(name = "level")
-    String pri;
+    String level;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "taskPriority")
