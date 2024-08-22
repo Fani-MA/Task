@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.task.domain.task.Task;
+import org.example.task.domain.task.TaskResponse;
+import org.example.task.domain.task.TaskResponseFactory;
 import org.example.task.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +19,12 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService{
 
     TaskRepository taskRepository;
+    TaskResponseFactory taskResponseFactory;
     //todo Make dto for response
 
     @Transactional(readOnly = true)
-    public List<Task> getAuthorTasks(Long authorId){
-        return taskRepository.findTaskByAuthor(authorId);
+    public List<TaskResponse> getAuthorTasks(Long authorId){
+        return taskRepository.findTaskByAuthor(authorId).stream().map(taskResponseFactory::createResponse).toList();
     }
 
     @Transactional(readOnly = true)

@@ -40,7 +40,7 @@ public class JwtTokenUtils {
                 .subject(userDetails.getUsername())
                 .issuedAt(createdTime)
                 .expiration(expiredDime)
-//                .claims(claims)
+                .claims(claims)
                 .signWith(getKey(secret), Jwts.SIG.HS256)
                 .compact();
     }
@@ -57,6 +57,10 @@ public class JwtTokenUtils {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    public List<String> getRoles(String token){
+        return getAllClaims(token).get("roles", List.class);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

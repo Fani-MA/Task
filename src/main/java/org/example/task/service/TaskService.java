@@ -1,12 +1,12 @@
 package org.example.task.service;
 
-import org.example.task.domain.task.Task;
+import org.example.task.domain.task.TaskResponse;
 
 import java.util.List;
 
 public interface TaskService {
 
-    List<Task> getAuthorTasks(Long userId);
+    List<TaskResponse> getAuthorTasks(Long userId);
 
 
 }

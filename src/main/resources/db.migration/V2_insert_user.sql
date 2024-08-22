@@ -4,6 +4,7 @@ INSERT INTO users(user_name, password, email, phone_number)
             ('kvasar', '2112', 'kvasar@mail.com', '+77 83 77 467'),
             ('skywing', '2112', 'skywing@mail.com', '+77 85 64 497');
 
+-- $2a$10$4dWfhiBZRtQ/BrTn4mrpG.sOx0rW14qSdIx194deUqP5s0Y.MfwjO
 INSERT INTO roles(role)
     VALUES ('ROLE_USER'),
            ('ROLE_ADMIN');

@@ -12,10 +12,11 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler
     public ErrorDto projectNotFoundException(ProjectNotFoundException e){
-        return ErrorDto.builder()
-                .time(new Date())
-                .status(HttpStatus.BAD_REQUEST)
-                .message(e.getMessage())
-                .build();
+//        return ErrorDto.builder()
+//                .time(new Date())
+//                .status(HttpStatus.BAD_REQUEST)
+//                .message(e.getMessage())
+//                .build();
+        return new ErrorDto(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }

@@ -3,6 +3,7 @@ package org.example.task.controller;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.example.task.domain.task.TaskStageRequest;
 import org.example.task.service.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,8 @@ public class ProjectController {
     }
 
     @PostMapping("/{project_id}/stages")
-    public ResponseEntity<?> addTaskStageInProject(@PathVariable("project_id") Long projectId, @RequestBody String stage){
+    public ResponseEntity<?> addTaskStageInProject(@PathVariable("project_id") Long projectId, @RequestBody TaskStageRequest stage){
 
-        return ResponseEntity.ok(projectService.addNewStageToProject(projectId, stage));
+        return ResponseEntity.ok(projectService.addNewStageToProject(projectId, stage.getStage()));
     }
 }

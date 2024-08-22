@@ -4,10 +4,10 @@ package org.example.task.config;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.catalina.filters.CorsFilter;
 import org.example.task.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +28,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     UserServiceImpl userService;
+    JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -46,27 +48,29 @@ public class SecurityConfig {
         return provider;
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-
-        security
-                .cors(Customizer.withDefaults())
-                .csrf(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/api/v1/projects/*").authenticated()
-//                                .anyRequest().authenticated()
-                                .anyRequest().permitAll()
-
-                )
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults());
-
-
-
-        return security.build();
-    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
+//
+//        security
+//                .cors().disable()
+//                .csrf().disable()
+//                .authorizeHttpRequests(authorize ->
+//                        authorize.requestMatchers("api/v1/auth").permitAll())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        ;
+////                        authorize.requestMatchers("/api/v1/projects/*").authenticated()
+////                                .requestMatchers(HttpMethod.POST, "/api/v1/projects/close/*").authenticated()
+////                                .requestMatchers(HttpMethod.GET, "/api/v1/projects/myProjects/*").authenticated()
+////                                .requestMatchers(HttpMethod.POST, "/api/v1/tasks/").authenticated()
+////                                .requestMatchers(HttpMethod.PATCH, "/api/v1/stages/*").authenticated()
+////                                .anyRequest().permitAll())
+////                .httpBasic(Customizer.withDefaults())
+////                .formLogin(Customizer.withDefaults())
+////                .logout(Customizer.withDefaults())
+////                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return security.build();
+//    }
 
 
 }
