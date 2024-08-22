@@ -26,7 +26,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     User author;
 
