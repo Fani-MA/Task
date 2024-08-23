@@ -1,5 +1,12 @@
 package org.example.task.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Auth")
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -28,8 +36,15 @@ public class AuthController {
     JwtTokenUtils  jwtTokenUtils;
     AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Auth",description = "Auth users with email and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success auth",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @PostMapping("/auth")
-    public ResponseEntity<?> createToken(@RequestBody JwtRequest authRequest){
+    public ResponseEntity<?> createToken(@Valid @RequestBody JwtRequest authRequest){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         } catch (BadCredentialsException e){
@@ -43,7 +58,6 @@ public class AuthController {
         if(token != null && jwtTokenUtils.validateToken(token, userDetails)) {
             return ResponseEntity.ok(new JwtResponse(token));
         }
-
 
         return ResponseEntity.ok(new JwtResponse(token));
     }

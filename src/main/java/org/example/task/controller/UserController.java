@@ -1,6 +1,7 @@
 package org.example.task.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.task.domain.user.User;
@@ -20,23 +21,19 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id){
-
+    public ResponseEntity<?> findUser(@PathVariable("id") Long id){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userRepository.findById(id));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody UserRequest user){
-
-
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest user){
         userRepository.save(User.builder()
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .username(user.getUsername())
                 .build());
-
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
