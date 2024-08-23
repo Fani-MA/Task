@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 @Data
 public class JwtRequest implements Serializable {
-    String username;
+//    String username;
 
-//    String email;
+    String email;
 
     String password;
 

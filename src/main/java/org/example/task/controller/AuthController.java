@@ -14,12 +14,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthController {
@@ -30,18 +29,15 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/auth")
-    public ResponseEntity<?> createToken(
-            @RequestBody JwtRequest authRequest
-    ){
-//        System.out.println("Method is work");
+    public ResponseEntity<?> createToken(@RequestBody JwtRequest authRequest){
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         } catch (BadCredentialsException e){
             return new ResponseEntity<>(
                     new ErrorDto(HttpStatus.UNAUTHORIZED, "Uncorrected username or password"),HttpStatus.UNAUTHORIZED);
         }
 
-        UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
+        UserDetails userDetails = userService.loadUserByUsername(authRequest.getEmail());
         String token = jwtTokenUtils.createToken(userDetails);
 
         if(token != null && jwtTokenUtils.validateToken(token, userDetails)) {
