@@ -33,7 +33,7 @@ public  class UserServiceImpl implements UserDetailsService {
                         () -> new UsernameNotFoundException(String.format("User with this email %s not found.", email)));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getRoles().stream().map(
                         role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList()));

@@ -8,6 +8,7 @@ import org.example.task.domain.task.Task;
 import org.example.task.domain.task.TaskResponse;
 import org.example.task.domain.task.TaskResponseFactory;
 import org.example.task.repository.TaskRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,8 @@ public class TaskServiceImpl implements TaskService{
     //todo Make dto for response
 
     @Transactional(readOnly = true)
-    public List<TaskResponse> getAuthorTasks(Long authorId){
-        return taskRepository.findTaskByAuthor(authorId).stream().map(taskResponseFactory::createResponse).toList();
+    public List<TaskResponse> getAuthorTasks(Long authorId, Pageable pageable){
+        return taskRepository.findTaskByAuthor(authorId, pageable).stream().map(taskResponseFactory::createResponse).toList();
     }
 
     @Transactional(readOnly = true)
