@@ -2,8 +2,9 @@ package org.example.task.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,13 +42,13 @@ public class JwtTokenUtils {
                 .issuedAt(createdTime)
                 .expiration(expiredDime)
                 .claims(claims)
-                .signWith(getKey(secret), Jwts.SIG.HS256)
+                .signWith(SignatureAlgorithm.HS256, getKey(secret))
                 .compact();
     }
 
 
     private SecretKey getKey (String key){
-        byte[] keys = Decoders.BASE64.decode(secret);
+        byte[] keys = DatatypeConverter.parseBase64Binary(secret);
         return Keys.hmacShaKeyFor(keys);
     }
 

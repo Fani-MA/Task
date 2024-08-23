@@ -2,7 +2,8 @@ server:
   port: 8090
 
 jwt:
-  secret: f3f42ea9-3104-4d13-84c0-7bcb68202f16
+#  secret: f3f42ea931044d1384c07bcb68208fa5b6cdb6cd697
+  secret: rgx8o8VQGuDa2AqCHSgVOD5G68Ld5YYM7N7THmvLIKcq8ui
   lifetime: 30m
 
 spring:

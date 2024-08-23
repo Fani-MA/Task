@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -48,29 +47,26 @@ public class SecurityConfig {
         return provider;
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-//
-//        security
-//                .cors().disable()
-//                .csrf().disable()
-//                .authorizeHttpRequests(authorize ->
-//                        authorize.requestMatchers("api/v1/auth").permitAll())
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//        ;
-////                        authorize.requestMatchers("/api/v1/projects/*").authenticated()
-////                                .requestMatchers(HttpMethod.POST, "/api/v1/projects/close/*").authenticated()
-////                                .requestMatchers(HttpMethod.GET, "/api/v1/projects/myProjects/*").authenticated()
-////                                .requestMatchers(HttpMethod.POST, "/api/v1/tasks/").authenticated()
-////                                .requestMatchers(HttpMethod.PATCH, "/api/v1/stages/*").authenticated()
-////                                .anyRequest().permitAll())
-////                .httpBasic(Customizer.withDefaults())
-////                .formLogin(Customizer.withDefaults())
-////                .logout(Customizer.withDefaults())
-////                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return security.build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
+
+        security
+                .cors().disable()
+                .csrf().disable()
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers("/api/v1/projects/*").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/projects/close/*").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/projects/myProjects/*").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/tasks/").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/api/v1/stages/*").authenticated()
+                                .anyRequest().permitAll())
+//                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                .logout(Customizer.withDefaults())
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return security.build();
+    }
 
 
 }
